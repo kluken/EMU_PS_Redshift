@@ -97,7 +97,7 @@ def main():
     pred_allwise_cols = ["mag_auto_g", "mag_auto_r", "mag_auto_i", "mag_auto_z",
                         "magerr_auto_g", "magerr_auto_r", "magerr_auto_i", "magerr_auto_z",
                         "W1mag_x", "W2mag_x", "W3mag","W4mag",
-                        "e_W1mag_x", "e_W2mag_x", "e_W3mag","e_W4mag"]
+                        "e_W1mag", "e_W2mag", "e_W3mag","e_W4mag"]
 
     full_table_catwise = Table.read(pred_file).to_pandas()
     full_table_allwise = Table.read(pred_file_allwise).to_pandas()

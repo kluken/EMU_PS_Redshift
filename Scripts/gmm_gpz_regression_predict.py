@@ -270,16 +270,16 @@ def main():
             
         
         
-    pred_all_file_name = "pred_all_comp_0.txt"
-    train_all_file_name = "train_all_comp_0.cat"
-    test_all_file_name = "test_all_comp_0.cat"
+    pred_all_file_name = "pred_allwise_comp_0.txt"
+    train_all_file_name = "train_allwise_comp_0.cat"
+    test_all_file_name = "test_allwise_comp_0.cat"
     pred_all_table_stack = Table.read(pred_all_file_name, format="ascii.commented_header", header_start=10)
     test_all_table_stack = Table.read(train_all_file_name, format="ascii.commented_header")
     train_all_table_stack = Table.read(test_all_file_name, format="ascii.commented_header")
         
-    pred_cat_file_name = "pred_cat_comp_0.txt"
-    train_cat_file_name = "train_cat_comp_0.cat"
-    test_cat_file_name = "test_cat_comp_0.cat"
+    pred_cat_file_name = "pred_catwise_comp_0.txt"
+    train_cat_file_name = "train_catwise_comp_0.cat"
+    test_cat_file_name = "test_catwise_comp_0.cat"
     pred_cat_table_stack = Table.read(pred_cat_file_name, format="ascii.commented_header", header_start=10)
     test_cat_table_stack = Table.read(train_cat_file_name, format="ascii.commented_header")
     train_cat_table_stack = Table.read(test_cat_file_name, format="ascii.commented_header")
@@ -296,16 +296,16 @@ def main():
 
 
     for component in np.arange(1,gmm_model_cat.n_components):
-        pred_all_file_name = "pred_all_comp_" + str(component) + ".txt"
-        test_all_file_name = "test_all_comp_" + str(component) + ".cat"
-        train_all_file_name = "train_all_comp_" + str(component) + ".cat"
+        pred_all_file_name = "pred_allwise_comp_" + str(component) + ".txt"
+        test_all_file_name = "test_allwise_comp_" + str(component) + ".cat"
+        train_all_file_name = "train_allwise_comp_" + str(component) + ".cat"
         pred_all_table = Table.read(pred_all_file_name, format="ascii.commented_header", header_start=10)
         test_all_table = Table.read(test_all_file_name, format="ascii.commented_header")
         train_all_table = Table.read(train_all_file_name, format="ascii.commented_header")
 
-        pred_cat_file_name = "pred_cat_comp_" + str(component) + ".txt"
-        test_cat_file_name = "test_cat_comp_" + str(component) + ".cat"
-        train_cat_file_name = "train_cat_comp_" + str(component) + ".cat"
+        pred_cat_file_name = "pred_catwise_comp_" + str(component) + ".txt"
+        test_cat_file_name = "test_catwise_comp_" + str(component) + ".cat"
+        train_cat_file_name = "train_catwise_comp_" + str(component) + ".cat"
         pred_cat_table = Table.read(pred_cat_file_name, format="ascii.commented_header", header_start=10)
         test_cat_table = Table.read(test_cat_file_name, format="ascii.commented_header")
         train_cat_table = Table.read(train_cat_file_name, format="ascii.commented_header")
@@ -327,11 +327,11 @@ def main():
         train_cat_table_stack = vstack([train_cat_table_stack, train_cat_table])
 
 
-    test_all_table_stack.write("predictions_all_seed_"+str(seed)+"_comp_" + str(gmm_comp) + ".csv", format="csv", overwrite=True)
-    train_all_table_stack.write("train_all_seed_"+str(seed)+"_comp_" + str(gmm_comp) + ".csv", format="csv", overwrite=True)
+    test_all_table_stack.write("predictions_allwise_seed_"+str(seed)+"_comp_" + str(gmm_comp) + ".csv", format="csv", overwrite=True)
+    train_all_table_stack.write("train_allwise_seed_"+str(seed)+"_comp_" + str(gmm_comp) + ".csv", format="csv", overwrite=True)
 
-    test_cat_table_stack.write("predictions_cat_seed_"+str(seed)+"_comp_" + str(gmm_comp) + ".csv", format="csv", overwrite=True)
-    train_cat_table_stack.write("train_cat_seed_"+str(seed)+"_comp_" + str(gmm_comp) + ".csv", format="csv", overwrite=True)
+    test_cat_table_stack.write("predictions_catwise_seed_"+str(seed)+"_comp_" + str(gmm_comp) + ".csv", format="csv", overwrite=True)
+    train_cat_table_stack.write("train_catwise_seed_"+str(seed)+"_comp_" + str(gmm_comp) + ".csv", format="csv", overwrite=True)
 
 
 

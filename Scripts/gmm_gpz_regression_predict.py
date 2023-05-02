@@ -208,15 +208,23 @@ def main():
                 "magerr_g", "magerr_r", "magerr_i", "magerr_z",
                 "mag_w1", "mag_w2", "mag_w3", "mag_w4",
                 "magerr_w1", "magerr_w2", "magerr_w3", "magerr_w4"]
+            col_names_cat = ["z_spec", "mag_g", "mag_r", "mag_i", "mag_z",
+                "magerr_g", "magerr_r", "magerr_i", "magerr_z",
+                "mag_w1", "mag_w2",
+                "magerr_w1", "magerr_w2"]
             col_names_pred = ["mag_g", "mag_r", "mag_i", "mag_z",
                 "magerr_g", "magerr_r", "magerr_i", "magerr_z",
                 "mag_w1", "mag_w2", "mag_w3", "mag_w4",
                 "magerr_w1", "magerr_w2", "magerr_w3", "magerr_w4"]
+            col_names_pred_cat = ["mag_g", "mag_r", "mag_i", "mag_z",
+                "magerr_g", "magerr_r", "magerr_i", "magerr_z",
+                "mag_w1", "mag_w2", 
+                "magerr_w1", "magerr_w2"]
             
             train_table_all = Table(train_data_all, names=col_names)
             test_table_all = Table(test_data_all, names=col_names_pred)
-            train_table_cat = Table(train_data_cat, names=col_names)
-            test_table_cat = Table(test_data_cat, names=col_names_pred)
+            train_table_cat = Table(train_data_cat, names=col_names_cat)
+            test_table_cat = Table(test_data_cat, names=col_names_pred_cat)
             
             train_file_all = "train_allwise_comp_" + str(component) + ".cat"
             test_file_all = "test_allwise_comp_" + str(component) + ".cat"

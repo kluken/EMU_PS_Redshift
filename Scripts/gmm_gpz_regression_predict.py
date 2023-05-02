@@ -299,31 +299,34 @@ def main():
         pred_all_file_name = "pred_allwise_comp_" + str(component) + ".txt"
         test_all_file_name = "test_allwise_comp_" + str(component) + ".cat"
         train_all_file_name = "train_allwise_comp_" + str(component) + ".cat"
-        pred_all_table = Table.read(pred_all_file_name, format="ascii.commented_header", header_start=10)
         test_all_table = Table.read(test_all_file_name, format="ascii.commented_header")
         train_all_table = Table.read(train_all_file_name, format="ascii.commented_header")
+        if len(test_all_table > 0):
+            pred_all_table = Table.read(pred_all_file_name, format="ascii.commented_header", header_start=10)
+            test_all_table["prediction"] = pred_all_table["value"]
+            test_all_table["prediction_uncert"] = pred_all_table["uncertainty"]
+            test_all_table["comp_no"] = component
+            train_all_table["comp_no"] = component
+            test_all_table_stack = vstack([test_all_table_stack, test_all_table])
+        else:
+            print(f"No EMU AllWISE sources in Component {component}")
 
         pred_cat_file_name = "pred_catwise_comp_" + str(component) + ".txt"
         test_cat_file_name = "test_catwise_comp_" + str(component) + ".cat"
         train_cat_file_name = "train_catwise_comp_" + str(component) + ".cat"
-        pred_cat_table = Table.read(pred_cat_file_name, format="ascii.commented_header", header_start=10)
         test_cat_table = Table.read(test_cat_file_name, format="ascii.commented_header")
         train_cat_table = Table.read(train_cat_file_name, format="ascii.commented_header")
+        if len(test_cat_table > 0):
+            pred_cat_table = Table.read(pred_cat_file_name, format="ascii.commented_header", header_start=10)
+            test_cat_table["prediction"] = pred_cat_table["value"]
+            test_cat_table["prediction_uncert"] = pred_cat_table["uncertainty"]
+            test_cat_table["comp_no"] = component
+            train_cat_table["comp_no"] = component
+            test_cat_table_stack = vstack([test_cat_table_stack, test_cat_table])
+        else:
+            print(f"No EMU CatWISE sources in Component {component}")
 
-        test_all_table["prediction"] = pred_all_table["value"]
-        test_all_table["prediction_uncert"] = pred_all_table["uncertainty"]
-        test_all_table["comp_no"] = component
-        train_all_table["comp_no"] = component
-
-        test_cat_table["prediction"] = pred_cat_table["value"]
-        test_cat_table["prediction_uncert"] = pred_cat_table["uncertainty"]
-        test_cat_table["comp_no"] = component
-        train_cat_table["comp_no"] = component
-
-        test_all_table_stack = vstack([test_all_table_stack, test_all_table])
         train_all_table_stack = vstack([train_all_table_stack, train_all_table])
-
-        test_cat_table_stack = vstack([test_cat_table_stack, test_cat_table])
         train_cat_table_stack = vstack([train_cat_table_stack, train_cat_table])
 
 

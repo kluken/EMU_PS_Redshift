@@ -93,7 +93,7 @@ def main():
     pred_cols = ["mag_auto_g", "mag_auto_r", "mag_auto_i", "mag_auto_z",
                         "magerr_auto_g", "magerr_auto_r", "magerr_auto_i", "magerr_auto_z",
                         "w1mag", "w2mag",
-                        "e_W1Mag", "e_W2Mag"]
+                        "w2sigm", "w2sigm"]
     pred_allwise_cols = ["mag_auto_g", "mag_auto_r", "mag_auto_i", "mag_auto_z",
                         "magerr_auto_g", "magerr_auto_r", "magerr_auto_i", "magerr_auto_z",
                         "W1mag_x", "W2mag_x", "W3mag","W4mag",

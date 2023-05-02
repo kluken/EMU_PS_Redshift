@@ -274,15 +274,15 @@ def main():
     train_all_file_name = "train_allwise_comp_0.cat"
     test_all_file_name = "test_allwise_comp_0.cat"
     pred_all_table_stack = Table.read(pred_all_file_name, format="ascii.commented_header", header_start=10)
-    test_all_table_stack = Table.read(train_all_file_name, format="ascii.commented_header")
-    train_all_table_stack = Table.read(test_all_file_name, format="ascii.commented_header")
+    train_all_table_stack = Table.read(train_all_file_name, format="ascii.commented_header")
+    test_all_table_stack = Table.read(test_all_file_name, format="ascii.commented_header")
         
     pred_cat_file_name = "pred_catwise_comp_0.txt"
     train_cat_file_name = "train_catwise_comp_0.cat"
     test_cat_file_name = "test_catwise_comp_0.cat"
     pred_cat_table_stack = Table.read(pred_cat_file_name, format="ascii.commented_header", header_start=10)
-    test_cat_table_stack = Table.read(train_cat_file_name, format="ascii.commented_header")
-    train_cat_table_stack = Table.read(test_cat_file_name, format="ascii.commented_header")
+    train_cat_table_stack = Table.read(train_cat_file_name, format="ascii.commented_header")
+    test_cat_table_stack = Table.read(test_cat_file_name, format="ascii.commented_header")
 
     test_all_table_stack["prediction"] = pred_all_table_stack["value"]
     test_all_table_stack["prediction_uncert"] = pred_all_table_stack["uncertainty"]

@@ -1,6 +1,9 @@
 Containers/*.sif
 .DS_Store
 Models/*
+Data/*
+Scripts/*.pdf
+Scripts/*.ipynb
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

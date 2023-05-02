@@ -228,8 +228,8 @@ def main():
             
             train_file_all = "train_allwise_comp_" + str(component) + ".cat"
             test_file_all = "test_allwise_comp_" + str(component) + ".cat"
-            train_file_cat = "train_catwise_test_comp_" + str(component) + ".cat"
-            test_file_cat = "test_catwise_test_comp_" + str(component) + ".cat"
+            train_file_cat = "train_catwise_comp_" + str(component) + ".cat"
+            test_file_cat = "test_catwise_comp_" + str(component) + ".cat"
             
             train_table_all.write(train_file_all, format='ascii.commented_header', overwrite=True)
             test_table_all.write(test_file_all, format='ascii.commented_header', overwrite=True)

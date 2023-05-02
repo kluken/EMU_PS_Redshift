@@ -148,10 +148,6 @@ def main():
 
     gmm_comp = 30
 
-    for i in range(len(pred_cols)):
-         print(np.sum(np.isnan(x_vals_cat[:,i])))
-    wer
-
     # for gmm_comp in gmm_components_list:
     gmm_model_all = GaussianMixture(n_components=gmm_comp,
                         max_iter=500).fit(x_vals_all)

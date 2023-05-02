@@ -301,7 +301,7 @@ def main():
         train_all_file_name = "train_allwise_comp_" + str(component) + ".cat"
         test_all_table = Table.read(test_all_file_name, format="ascii.commented_header")
         train_all_table = Table.read(train_all_file_name, format="ascii.commented_header")
-        if len(test_all_table > 0):
+        if len(test_all_table) > 0:
             pred_all_table = Table.read(pred_all_file_name, format="ascii.commented_header", header_start=10)
             test_all_table["prediction"] = pred_all_table["value"]
             test_all_table["prediction_uncert"] = pred_all_table["uncertainty"]
@@ -316,7 +316,7 @@ def main():
         train_cat_file_name = "train_catwise_comp_" + str(component) + ".cat"
         test_cat_table = Table.read(test_cat_file_name, format="ascii.commented_header")
         train_cat_table = Table.read(train_cat_file_name, format="ascii.commented_header")
-        if len(test_cat_table > 0):
+        if len(test_cat_table) > 0:
             pred_cat_table = Table.read(pred_cat_file_name, format="ascii.commented_header", header_start=10)
             test_cat_table["prediction"] = pred_cat_table["value"]
             test_cat_table["prediction_uncert"] = pred_cat_table["uncertainty"]

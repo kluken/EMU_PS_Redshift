@@ -137,8 +137,8 @@ def main():
     combined_train_data_catwise[np.where(combined_train_data_catwise[:,-2] == -99), -2] = np.nanmax(combined_train_data_catwise[:,-2])
     combined_train_data_catwise[np.where(combined_train_data_catwise[:,-1] == -99), -1] = np.max(combined_train_data_catwise[:,-1])
 
-    combined_train_data_allwise[np.where(np.isnan(combined_train_data_catwise[:,-2])), -2] = np.nanmax(combined_train_data_catwise[:,-2])
-    combined_train_data_allwise[np.where(np.isnan(combined_train_data_catwise[:,-1])), -1] = np.nanmax(combined_train_data_catwise[:,-1])
+    combined_train_data_catwise[np.where(np.isnan(combined_train_data_catwise[:,-2])), -2] = np.nanmax(combined_train_data_catwise[:,-2])
+    combined_train_data_catwise[np.where(np.isnan(combined_train_data_catwise[:,-1])), -1] = np.nanmax(combined_train_data_catwise[:,-1])
 
     x_vals_all = combined_train_data_allwise[:, 1:]
     y_vals_all = combined_train_data_allwise[:,0]
@@ -148,7 +148,9 @@ def main():
 
     gmm_comp = 30
 
-
+    for i in range(len(pred_cols)):
+         print(np.sum(np.isnan(x_vals_cat[:,i])))
+    wer
 
     # for gmm_comp in gmm_components_list:
     gmm_model_all = GaussianMixture(n_components=gmm_comp,

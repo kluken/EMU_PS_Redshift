@@ -140,6 +140,24 @@ def main():
     combined_train_data_catwise[np.where(np.isnan(combined_train_data_catwise[:,-2])), -2] = np.nanmax(combined_train_data_catwise[:,-2])
     combined_train_data_catwise[np.where(np.isnan(combined_train_data_catwise[:,-1])), -1] = np.nanmax(combined_train_data_catwise[:,-1])
 
+
+    x_vals_emu_allwise[np.where(x_vals_emu_allwise[:,-4] == -99), -4] = np.nanmax(x_vals_emu_allwise[:,-4])
+    x_vals_emu_allwise[np.where(x_vals_emu_allwise[:,-3] == -99), -3] = np.nanmax(x_vals_emu_allwise[:,-3])
+    x_vals_emu_allwise[np.where(x_vals_emu_allwise[:,-2] == -99), -2] = np.nanmax(x_vals_emu_allwise[:,-2])
+    x_vals_emu_allwise[np.where(x_vals_emu_allwise[:,-1] == -99), -1] = np.max(x_vals_emu_allwise[:,-1])
+
+    x_vals_emu_allwise[np.where(np.isnan(x_vals_emu_allwise[:,-4])), -4] = np.nanmax(x_vals_emu_allwise[:,-4])
+    x_vals_emu_allwise[np.where(np.isnan(x_vals_emu_allwise[:,-3])), -3] = np.nanmax(x_vals_emu_allwise[:,-3])
+    x_vals_emu_allwise[np.where(np.isnan(x_vals_emu_allwise[:,-2])), -2] = np.nanmax(x_vals_emu_allwise[:,-2])
+    x_vals_emu_allwise[np.where(np.isnan(x_vals_emu_allwise[:,-1])), -1] = np.nanmax(x_vals_emu_allwise[:,-1])
+
+
+    x_vals_emu_catwise[np.where(x_vals_emu_catwise[:,-2] == -99), -2] = np.nanmax(x_vals_emu_catwise[:,-2])
+    x_vals_emu_catwise[np.where(x_vals_emu_catwise[:,-1] == -99), -1] = np.max(x_vals_emu_catwise[:,-1])
+
+    x_vals_emu_catwise[np.where(np.isnan(x_vals_emu_catwise[:,-2])), -2] = np.nanmax(x_vals_emu_catwise[:,-2])
+    x_vals_emu_catwise[np.where(np.isnan(x_vals_emu_catwise[:,-1])), -1] = np.nanmax(x_vals_emu_catwise[:,-1])
+
     x_vals_all = combined_train_data_allwise[:, 1:]
     y_vals_all = combined_train_data_allwise[:,0]
     x_vals_cat = combined_train_data_catwise[:, 1:]

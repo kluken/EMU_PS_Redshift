@@ -59,17 +59,11 @@ def main():
 
 
     sdss_cols_catwise = ["z", "g_corrected", "r_corrected", "i_corrected", "z_corrected",
-                        "g_corrected_err", "r_corrected_err", "i_corrected_err", "z_corrected_err",
-                        "W1Mag", "W2Mag",
-                        "e_W1Mag", "e_W2Mag"]
+                        "W1Mag", "W2Mag"]
     des_cols_catwise = ["z", "mag_auto_g", "mag_auto_r", "mag_auto_i", "mag_auto_z",
-                        "magerr_auto_g", "magerr_auto_r", "magerr_auto_i", "magerr_auto_z",
-                        "W1Mag", "W2Mag",
-                        "e_W1Mag", "e_W2Mag"]
+                        "W1Mag", "W2Mag"]
     pred_cols = ["mag_auto_g", "mag_auto_r", "mag_auto_i", "mag_auto_z",
-                        "magerr_auto_g", "magerr_auto_r", "magerr_auto_i", "magerr_auto_z",
-                        "w1mag", "w2mag",
-                        "w2sigm", "w2sigm"]
+                        "w1mag", "w2mag"]
 
 
     atlas_data = read_fits(atlas_file, des_cols_catwise)

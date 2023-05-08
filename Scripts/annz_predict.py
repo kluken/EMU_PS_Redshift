@@ -100,7 +100,8 @@ def main():
     test_numpy_df.to_csv(test_file_name, index=False)
     pred_numpy_df = pd.DataFrame(data=pred_data, columns=pred_col_names)
     pred_numpy_df.to_csv(pred_file_name, index=False)
-    sdf
+    
+    
     #ANNz Initialisation
     initLogger()
     setCols()

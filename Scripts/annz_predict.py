@@ -177,7 +177,7 @@ def main():
         glob.annz["nMLMnow"] = nMLMnow
         if glob.annz["trainIndex"] >= 0 and glob.annz["trainIndex"] != nMLMnow or nMLMnow == 17: continue
 
-        glob.annz["inputVariables"] = "W1mag;W2mag;W3mag;W4mag;mag_g;mag_r;mag_i;mag_z"
+        glob.annz["inputVariables"] = "W1mag;W2mag;mag_g;mag_r;mag_i;mag_z"
         glob.annz["inputVarErrors"] = "" # Or add errors if wanted - finding by kNN seems to work
 
         glob.annz["userMLMopts"] = "" # Use a mix of BDT and ANN

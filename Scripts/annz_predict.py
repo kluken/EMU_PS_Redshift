@@ -98,9 +98,9 @@ def main():
     train_numpy_df.to_csv(train_file_name, index=False)
     test_numpy_df = pd.DataFrame(data=test_numpy, columns=col_names)
     test_numpy_df.to_csv(test_file_name, index=False)
-    pred_numpy_df = pd.DataFrame(data=pred_data, columns=col_names)
+    pred_numpy_df = pd.DataFrame(data=pred_data, columns=pred_col_names)
     pred_numpy_df.to_csv(pred_file_name, index=False)
-
+    sdf
     #ANNz Initialisation
     initLogger()
     setCols()

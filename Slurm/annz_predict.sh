@@ -13,4 +13,4 @@
 module load apptainer/latest 
 export APPTAINER_BINDPATH="/fred/oz237/kluken/EMU-PS/EMU_PS_Redshift/"
 
-singularity run /fred/oz237/kluken/EMU-PS/EMU_PS_Redshift/Containers/annz_latest.sif /fred/oz237/kluken/EMU-PS/EMU_PS_Redshift/Scripts/annz_predict.py  -l
+singularity run /fred/oz237/kluken/EMU-PS/EMU_PS_Redshift/Containers/annz_latest.sif /fred/oz237/kluken/EMU-PS/EMU_PS_Redshift/Scripts/annz_predict.py 

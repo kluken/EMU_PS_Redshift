@@ -122,7 +122,7 @@ def main():
     # Input Settings:
     glob.annz["inDirName"]    = "." #Location of input data
     glob.annz["splitTypeTrain"]  = "train_"+str(rand_seed)+".csv" # Training Data Set
-    glob.annz["splitTypeTest"]   = "validate_"+str(rand_seed)+".csv" # Validation Set
+    glob.annz["splitTypeTest"]   = "valid_"+str(rand_seed)+".csv" # Validation Set
     glob.annz["inAsciiFiles"]   = "pred_" + str(rand_seed) + "_catwise.csv" # Test Set
     glob.annz["inAsciiVars"]  = "D:z;F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag;D:W3mag;D:W4mag" # Input variables
 

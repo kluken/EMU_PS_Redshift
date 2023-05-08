@@ -52,10 +52,10 @@ def main():
     validate_split_rate = 0.3 # 30% of training set (70% of total) is taken for validation
 
     # Read files
-    atlas_file = "../Data/ATLAS_Corrected.fits"
-    stripe_file = "../Data/Stripe_Corrected.fits"
-    sdss_file = "../Data/RGZ_Corrected.fits"
-    pred_file = "../Data/EMU_PS_Clean.fits"
+    atlas_file = "../../Data/ATLAS_Corrected.fits"
+    stripe_file = "../../Data/Stripe_Corrected.fits"
+    sdss_file = "../../Data/RGZ_Corrected.fits"
+    pred_file = "../../Data/EMU_PS_Clean.fits"
 
 
     sdss_cols_catwise = ["z", "g_corrected", "r_corrected", "i_corrected", "z_corrected",

@@ -58,11 +58,11 @@ def main():
     overall_start = datetime.now()
     # Regression tests
     ## Initial run - finds value of "k" to use, and generates plots. 
-    folder_name = "kNN_Regress"
+    # folder_name = "kNN_Regress"
 
-    if not os.path.exists(folder_name):
-        os.makedirs(folder_name)
-    os.chdir(folder_name)
+    # if not os.path.exists(folder_name):
+    #     os.makedirs(folder_name)
+    # os.chdir(folder_name)
 
     ## Find the best value of k to use
     k_range = range(3, 31, 2)
@@ -91,55 +91,55 @@ def main():
     # rand_num = rand_gen.integers(314159)
 
 
-    start_time = datetime.now()
-    x_vals_norm_catwise, x_vals_emu_norm_catwise, _, _ = \
-        norm_x_vals(x_vals_catwise, x_vals_emu_catwise)
-    x_vals_norm_allwise, x_vals_emu_norm_allwise, _, _ = \
-        norm_x_vals(x_vals_allwise, x_vals_emu_allwise)
+    # start_time = datetime.now()
+    # x_vals_norm_catwise, x_vals_emu_norm_catwise, _, _ = \
+    #     norm_x_vals(x_vals_catwise, x_vals_emu_catwise)
+    # x_vals_norm_allwise, x_vals_emu_norm_allwise, _, _ = \
+    #     norm_x_vals(x_vals_allwise, x_vals_emu_allwise)
         
-    pred_catwise, model_catwise = \
-        kNN_pred(best_k_catwise, x_vals_norm_catwise, x_vals_emu_norm_catwise, y_vals_catwise)
-    pred_allwise, model_allwise = \
-        kNN_pred(best_k_allwise, x_vals_norm_allwise, x_vals_emu_norm_allwise, y_vals_allwise)
+    # pred_catwise, model_catwise = \
+    #     kNN_pred(best_k_catwise, x_vals_norm_catwise, x_vals_emu_norm_catwise, y_vals_catwise)
+    # pred_allwise, model_allwise = \
+    #     kNN_pred(best_k_allwise, x_vals_norm_allwise, x_vals_emu_norm_allwise, y_vals_allwise)
 
-    catwise_distances, catwise_indices = model_catwise.kneighbors(x_vals_emu_norm_catwise)
-    allwise_distances, allwise_indices = model_allwise.kneighbors(x_vals_emu_norm_allwise)
+    # catwise_distances, catwise_indices = model_catwise.kneighbors(x_vals_emu_norm_catwise)
+    # allwise_distances, allwise_indices = model_allwise.kneighbors(x_vals_emu_norm_allwise)
 
-    variances_catwise = []
-    for row in tqdm(catwise_indices):
-        train_predictions = model_catwise.predict(x_vals_norm_catwise[row,:])
-        variances_catwise.append(np.var(train_predictions))
+    # variances_catwise = []
+    # for row in tqdm(catwise_indices):
+    #     train_predictions = model_catwise.predict(x_vals_norm_catwise[row,:])
+    #     variances_catwise.append(np.var(train_predictions))
 
-    variances_allwise = []
-    for row in tqdm(allwise_indices):
-        train_predictions = model_allwise.predict(x_vals_norm_allwise[row,:])
-        variances_allwise.append(np.var(train_predictions))
-
-
-
-    prediction_filename_catwise = "predictions_catwise.csv"
-    df = pd.DataFrame({"EMU_island_id": full_table_catwise["island_id"],
-                    "EMU_component_id": full_table_catwise["component_id"],
-                    "EMU_component_name": full_table_catwise["component_name"],
-                    "Pred_z" : pred_catwise, "Uncertainty": variances_catwise})
-    df.to_csv(prediction_filename_catwise, index=False)
-    model_filename = "model_catwise.pickle"
-    with open(model_filename,  'wb') as pickle_file:
-        pickle.dump(model_catwise, pickle_file)   
-
-    prediction_filename = "predictions_allwise.csv"
-    df = pd.DataFrame({"EMU_island_id": full_table_allwise["island_id"],
-                    "EMU_component_id": full_table_allwise["component_id"],
-                    "EMU_component_name": full_table_allwise["component_name"],
-                    "Pred_z" : pred_allwise, "Uncertainty": variances_allwise})
-    df.to_csv(prediction_filename, index=False)
-    model_filename = "model_allwise.pickle"
-    with open(model_filename,  'wb') as pickle_file:
-        pickle.dump(model_allwise, pickle_file)   
+    # variances_allwise = []
+    # for row in tqdm(allwise_indices):
+    #     train_predictions = model_allwise.predict(x_vals_norm_allwise[row,:])
+    #     variances_allwise.append(np.var(train_predictions))
 
 
-    print("##################")
-    os.chdir("../")
+
+    # prediction_filename_catwise = "predictions_catwise.csv"
+    # df = pd.DataFrame({"EMU_island_id": full_table_catwise["island_id"],
+    #                 "EMU_component_id": full_table_catwise["component_id"],
+    #                 "EMU_component_name": full_table_catwise["component_name"],
+    #                 "Pred_z" : pred_catwise, "Uncertainty": variances_catwise})
+    # df.to_csv(prediction_filename_catwise, index=False)
+    # model_filename = "model_catwise.pickle"
+    # with open(model_filename,  'wb') as pickle_file:
+    #     pickle.dump(model_catwise, pickle_file)   
+
+    # prediction_filename = "predictions_allwise.csv"
+    # df = pd.DataFrame({"EMU_island_id": full_table_allwise["island_id"],
+    #                 "EMU_component_id": full_table_allwise["component_id"],
+    #                 "EMU_component_name": full_table_allwise["component_name"],
+    #                 "Pred_z" : pred_allwise, "Uncertainty": variances_allwise})
+    # df.to_csv(prediction_filename, index=False)
+    # model_filename = "model_allwise.pickle"
+    # with open(model_filename,  'wb') as pickle_file:
+    #     pickle.dump(model_allwise, pickle_file)   
+
+
+    # print("##################")
+    # os.chdir("../")
     folder_name = "rf_Regress"
 
     if not os.path.exists(folder_name):
@@ -166,10 +166,12 @@ def main():
             tree_val, k_fold_val, x_vals_allwise, y_vals_allwise, random_seed_kfold))
     best_tree_catwise = tree_range[np.argmin(out_rates_catwise)]
     best_tree_allwise = tree_range[np.argmin(out_rates_allwise)]
-    print("Outlier rates for the cross-validation -- CatWISE")
-    print(out_rates_catwise)
-    print("Outlier rates for the cross-validation -- AllWISE")
-    print(out_rates_allwise)
+    print("Best Tree Value | Best Outlier Rate -- CatWISE")
+    print(f"{best_tree_catwise} | {np.round(np.min(out_rates_catwise),2)}")
+    # 170 | 9.64%
+    print("Best Tree Value | Best Outlier Rate -- AllWISE")
+    print(f"{best_tree_allwise} | {np.round(np.min(out_rates_allwise),2)}")
+    # 173 | 9.89%
 
     x_vals_norm_catwise, x_vals_emu_norm_catwise, _, _ = \
         norm_x_vals(x_vals_catwise, x_vals_emu_catwise)

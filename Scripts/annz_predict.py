@@ -55,15 +55,15 @@ def main():
     atlas_file = "../../Data/ATLAS_Corrected.fits"
     stripe_file = "../../Data/Stripe_Corrected.fits"
     sdss_file = "../../Data/RGZ_Corrected.fits"
-    pred_file = "../../Data/EMU_PS_Clean.fits"
+    pred_file = "../../Data/EMU_PS_Clean_Allwise_2.fits"
 
 
     sdss_cols_catwise = ["z", "g_corrected", "r_corrected", "i_corrected", "z_corrected",
-                        "W1Mag", "W2Mag"]
+                        "W1Mag", "W2Mag", "W3Mag", "W4Mag"]
     des_cols_catwise = ["z", "mag_auto_g", "mag_auto_r", "mag_auto_i", "mag_auto_z",
-                        "W1Mag", "W2Mag"]
+                        "W1Mag", "W2Mag", "W3Mag", "W4Mag"]
     pred_cols = ["mag_auto_g", "mag_auto_r", "mag_auto_i", "mag_auto_z",
-                        "w1mag", "w2mag"]
+                        "w1mag", "w2mag", "w3mag", "w4mag"]
 
 
     atlas_data = read_fits(atlas_file, des_cols_catwise)
@@ -83,17 +83,17 @@ def main():
     test_numpy = np.hstack((np.expand_dims(y_vals_test, axis=1), x_vals_test))
 
     col_names = ["#z", "mag_g", "mag_r", "mag_i", "mag_z",
-        "W1Mag", "W2Mag"]
+        "W1Mag", "W2Mag", "W3Mag", "W4Mag"]
 
     pred_col_names = ["#mag_g", "mag_r", "mag_i", "mag_z",
-        "W1Mag", "W2Mag"]
+        "W1Mag", "W2Mag", "W3Mag", "W4Mag"]
 
 
 
     
-    train_file_name = "train_" + str(rand_seed) + ".csv"
-    test_file_name = "valid_" + str(rand_seed) + ".csv"
-    pred_file_name = "pred_" + str(rand_seed) + "_catwise.csv"
+    train_file_name = "train_allwise_" + str(rand_seed) + ".csv"
+    test_file_name = "valid_allwise_" + str(rand_seed) + ".csv"
+    pred_file_name = "pred_allwise_" + str(rand_seed) + "_catwise.csv"
     train_numpy_df = pd.DataFrame(data=train_numpy, columns=col_names)
     train_numpy_df.to_csv(train_file_name, index=False)
     test_numpy_df = pd.DataFrame(data=test_numpy, columns=col_names)
@@ -121,13 +121,13 @@ def main():
 
     # Input Settings:
     glob.annz["inDirName"]    = "." #Location of input data
-    glob.annz["splitTypeTrain"]  = "train_"+str(rand_seed)+".csv" # Training Data Set
-    glob.annz["splitTypeTest"]   = "valid_"+str(rand_seed)+".csv" # Validation Set
-    glob.annz["inAsciiFiles"]   = "pred_" + str(rand_seed) + "_catwise.csv" # Test Set
-    glob.annz["inAsciiVars"]  = "D:z;F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag" # Input variables
+    glob.annz["splitTypeTrain"]  = "train_allwise_"+str(rand_seed)+".csv" # Training Data Set
+    glob.annz["splitTypeTest"]   = "valid_allwise_"+str(rand_seed)+".csv" # Validation Set
+    glob.annz["inAsciiFiles"]   = "pred_allwise_" + str(rand_seed) + "_catwise.csv" # Test Set
+    glob.annz["inAsciiVars"]  = "D:z;F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag;D:W3mag;D:W4mag" # Input variables
 
     # Output Settings:
-    glob.annz["outDirName"] = "Results" # Location of output results (models, results, etc) - Will be created
+    glob.annz["outDirName"] = "Results_allwise" # Location of output results (models, results, etc) - Will be created
     glob.annz["evalDirPostfix"] = "seed_" + str(rand_seed) # Place to store the final results
 
     # General ANNz Opts:
@@ -177,7 +177,7 @@ def main():
         glob.annz["nMLMnow"] = nMLMnow
         if glob.annz["trainIndex"] >= 0 and glob.annz["trainIndex"] != nMLMnow or nMLMnow == 17: continue
 
-        glob.annz["inputVariables"] = "W1mag;W2mag;mag_g;mag_r;mag_i;mag_z"
+        glob.annz["inputVariables"] = "W1mag;W2mag;W3mag;W4mag;mag_g;mag_r;mag_i;mag_z"
         glob.annz["inputVarErrors"] = "" # Or add errors if wanted - finding by kNN seems to work
 
         glob.annz["userMLMopts"] = "" # Use a mix of BDT and ANN
@@ -276,7 +276,7 @@ def main():
     # Evaluation
     glob.annz["doOptim"] = False
     glob.annz["doEval"] = True
-    glob.annz["inAsciiVars"]  = "F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag" # Input variables
+    glob.annz["inAsciiVars"]  = "F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag;D:W3mag;D:W4mag" # Input variables
 
 
 
@@ -287,8 +287,8 @@ def main():
 
     ######################################################################################
     # Tidy up!
-    old_results_file = "output/Results/regres/eval_seed_" + str(rand_seed) + "/ANNZ_randomReg_0000.csv"
-    new_results_file = "./predictions.csv"
+    old_results_file = "output/Results_allwise/regres/eval_seed_" + str(rand_seed) + "/ANNZ_randomReg_0000.csv"
+    new_results_file = "./predictions_allwise.csv"
     shutil.move(old_results_file, new_results_file) 
 
     # predictions = np.loadtxt(new_results_file, delimiter=',', skiprows=1) 

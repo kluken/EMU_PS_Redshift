@@ -55,7 +55,7 @@ def main():
     atlas_file = "../../Data/ATLAS_Corrected.fits"
     stripe_file = "../../Data/Stripe_Corrected.fits"
     sdss_file = "../../Data/RGZ_Corrected.fits"
-    pred_file = "../../Data/EMU_PS_Clean_Allwise_2.fits"
+    pred_file = "../../Data/EMU_PS_Clean_AllWISE_2.fits"
 
 
     sdss_cols_catwise = ["z", "g_corrected", "r_corrected", "i_corrected", "z_corrected",

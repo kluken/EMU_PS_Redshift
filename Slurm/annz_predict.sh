@@ -7,8 +7,8 @@
 #SBATCH --job-name ANNz_Regression
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=k.luken@westernsydney.edu.au
-#SBATCH --output slurm_logs/annz_%A_%a.out
-#SBATCH --error slurm_logs/annz_%A_%a.err
+#SBATCH --output slurm_logs_allwise/annz_%A_%a.out
+#SBATCH --error slurm_logs_allwise/annz_%A_%a.err
 
 module load apptainer/latest 
 export APPTAINER_BINDPATH="/fred/oz237/kluken/EMU-PS/EMU_PS_Redshift/"

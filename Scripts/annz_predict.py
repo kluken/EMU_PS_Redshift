@@ -125,6 +125,7 @@ def main():
     glob.annz["splitTypeTest"]   = "valid_"+str(rand_seed)+".csv" # Validation Set
     glob.annz["inAsciiFiles"]   = "pred_" + str(rand_seed) + "_catwise.csv" # Test Set
     glob.annz["inAsciiVars"]  = "D:z;F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag" # Input variables
+    glob.annz["inAsciiVars"]  = "F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag" # Input variables
 
     # Output Settings:
     glob.annz["outDirName"] = "Results" # Location of output results (models, results, etc) - Will be created
@@ -290,28 +291,26 @@ def main():
     new_results_file = "./predictions.csv"
     shutil.move(old_results_file, new_results_file) 
 
-    predictions = np.loadtxt(new_results_file, delimiter=',', skiprows=1) 
-    hex_plot_filename = "final_plot.pdf"
-    plot_hex(predictions[:,0], predictions[:,1], hex_plot_filename) 
-    num_train = train_numpy.shape[0]
-    num_valid = valid_numpy.shape[0]
-    num_test = test_numpy.shape[0]
-    out_rate = outlier_rate(norm_residual(predictions[:,0], predictions[:,1]))
-    time_taken = datetime.now() - start_time
-    stats = {
-        "num_train": num_train,
-        "num_validate": num_valid,
-        "num_test": num_test,
-        "slurm_seed": seed,
-        "split_seed": rand_seed,
-        "outlier_rate": out_rate,
-        "time_taken": time_taken
-    }
-    stats_filename = "stats.csv"
-    stats_df = pd.DataFrame(data=stats, index=[0])
-    stats_df.to_csv(stats_filename)
+    # predictions = np.loadtxt(new_results_file, delimiter=',', skiprows=1) 
+    # hex_plot_filename = "final_plot.pdf"
+    # plot_hex(predictions[:,0], predictions[:,1], hex_plot_filename) 
+    # num_train = train_numpy.shape[0]
+    # num_test = test_numpy.shape[0]
+    # out_rate = outlier_rate(norm_residual(predictions[:,0], predictions[:,1]))
+    # time_taken = datetime.now() - start_time
+    # stats = {
+    #     "num_train": num_train,
+    #     "num_test": num_test,
+    #     "slurm_seed": seed,
+    #     "split_seed": rand_seed,
+    #     "outlier_rate": out_rate,
+    #     "time_taken": time_taken
+    # }
+    # stats_filename = "stats.csv"
+    # stats_df = pd.DataFrame(data=stats, index=[0])
+    # stats_df.to_csv(stats_filename)
 
-    shutil.rmtree("output/Results/seed_" + str(rand_seed), ignore_errors=True)
+    # shutil.rmtree("output/Results/seed_" + str(rand_seed), ignore_errors=True)
 
 if __name__ == "__main__":
 	main()

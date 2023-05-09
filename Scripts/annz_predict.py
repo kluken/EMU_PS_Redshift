@@ -276,7 +276,7 @@ def main():
     # Evaluation
     glob.annz["doOptim"] = False
     glob.annz["doEval"] = True
-    glob.annz["inAsciiVars"]  = "#F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag" # Input variables
+    glob.annz["inAsciiVars"]  = "#D:mag_g;D:mag_r;D:mag_i;D:mag_z;D:W1mag;D:W2mag" # Input variables
 
 
 

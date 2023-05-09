@@ -67,11 +67,11 @@ def main():
     gpz_opts["GRAD_TOLERANCE"] = 1e-5
 
 
-    atlas_file = "../Data/ATLAS_Corrected.fits"
-    stripe_file = "../Data/Stripe_Corrected.fits"
-    sdss_file = "../Data/RGZ_Corrected.fits"
-    pred_file = "../Data/EMU_PS_Clean.fits"
-    pred_file_allwise = "../Data/EMU_PS_Clean_AllWISE_2.fits"
+    atlas_file = "../../Data/ATLAS_Corrected.fits"
+    stripe_file = "../../Data/Stripe_Corrected.fits"
+    sdss_file = "../../Data/RGZ_Corrected.fits"
+    pred_file = "../../Data/EMU_PS_Clean.fits"
+    pred_file_allwise = "../../Data/EMU_PS_Clean_AllWISE_2.fits"
 
     sdss_cols_allwise = ["z", "g_corrected", "r_corrected", "i_corrected", "z_corrected",
                         "g_corrected_err", "r_corrected_err", "i_corrected_err", "z_corrected_err",

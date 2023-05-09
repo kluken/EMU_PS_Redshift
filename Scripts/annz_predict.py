@@ -125,7 +125,6 @@ def main():
     glob.annz["splitTypeTest"]   = "valid_"+str(rand_seed)+".csv" # Validation Set
     glob.annz["inAsciiFiles"]   = "pred_" + str(rand_seed) + "_catwise.csv" # Test Set
     glob.annz["inAsciiVars"]  = "D:z;F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag" # Input variables
-    glob.annz["inAsciiVars"]  = "F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag" # Input variables
 
     # Output Settings:
     glob.annz["outDirName"] = "Results" # Location of output results (models, results, etc) - Will be created
@@ -277,6 +276,7 @@ def main():
     # Evaluation
     glob.annz["doOptim"] = False
     glob.annz["doEval"] = True
+    glob.annz["inAsciiVars"]  = "F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag" # Input variables
 
 
 

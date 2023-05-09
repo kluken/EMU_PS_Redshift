@@ -164,7 +164,7 @@ def main():
     # Run first stage - Generate input trees
     glob.annz["doGenInputTrees"] = True
 
-    runANNZ()
+    # runANNZ()
 
     ######################################################################################
     # Training
@@ -216,7 +216,7 @@ def main():
                 glob.annz["biasCorMLMopt"]   = "ANNZ_MLM=ANN:HiddenLayers=N+5:VarTransform=N,P:TrainingMethod=BFGS:NCycles=500:UseRegulator=True"
 
         # run ANNZ with the current settings
-        runANNZ()
+        # runANNZ()
 
     ######################################################################################
     # Optimisation
@@ -270,7 +270,7 @@ def main():
     # --------------------------------------------------------------------------------------------------
     glob.annz["minAcptMLMsForPDFs"]  = 10
 
-    runANNZ()
+    # runANNZ()
 
 
     ######################################################################################

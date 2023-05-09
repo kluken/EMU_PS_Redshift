@@ -230,6 +230,15 @@ def main():
             test_file_all = "test_allwise_comp_" + str(component) + ".cat"
             train_file_cat = "train_catwise_comp_" + str(component) + ".cat"
             test_file_cat = "test_catwise_comp_" + str(component) + ".cat"
+
+            test_table_all["EMU_island_id"] = full_table_allwise["island_id"][clusters_test_all == component]
+            test_table_all["EMU_component_id"] = full_table_allwise["component_id"][clusters_test_all == component]
+            test_table_all["EMU_component_name"] = full_table_allwise["component_name"][clusters_test_all == component]
+
+            test_table_cat["EMU_island_id"] = full_table_catwise["island_id"][clusters_test_all == component]
+            test_table_cat["EMU_component_id"] = full_table_catwise["component_id"][clusters_test_all == component]
+            test_table_cat["EMU_component_name"] = full_table_catwise["component_name"][clusters_test_all == component]
+
             
             train_table_all.write(train_file_all, format='ascii.commented_header', overwrite=True)
             test_table_all.write(test_file_all, format='ascii.commented_header', overwrite=True)

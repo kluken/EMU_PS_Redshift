@@ -85,7 +85,7 @@ def main():
     col_names = ["#z", "mag_g", "mag_r", "mag_i", "mag_z",
         "W1Mag", "W2Mag"]
 
-    pred_col_names = ["mag_g", "mag_r", "mag_i", "mag_z",
+    pred_col_names = ["#mag_g", "mag_r", "mag_i", "mag_z",
         "W1Mag", "W2Mag"]
 
 
@@ -276,7 +276,7 @@ def main():
     # Evaluation
     glob.annz["doOptim"] = False
     glob.annz["doEval"] = True
-    glob.annz["inAsciiVars"]  = "F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag" # Input variables
+    glob.annz["inAsciiVars"]  = "#F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag" # Input variables
 
 
 

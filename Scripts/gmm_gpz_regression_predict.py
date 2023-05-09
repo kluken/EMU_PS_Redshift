@@ -231,13 +231,16 @@ def main():
             train_file_cat = "train_catwise_comp_" + str(component) + ".cat"
             test_file_cat = "test_catwise_comp_" + str(component) + ".cat"
 
-            test_table_all["EMU_island_id"] = full_table_allwise["island_id"][clusters_test_all == component]
-            test_table_all["EMU_component_id"] = full_table_allwise["component_id"][clusters_test_all == component]
-            test_table_all["EMU_component_name"] = full_table_allwise["component_name"][clusters_test_all == component]
+            temp_table_allwise = full_table_allwise[clusters_test_all == component]
+            temp_table_catwise = full_table_catwise[clusters_test_cat == component]
 
-            test_table_cat["EMU_island_id"] = full_table_catwise["island_id"][clusters_test_all == component]
-            test_table_cat["EMU_component_id"] = full_table_catwise["component_id"][clusters_test_all == component]
-            test_table_cat["EMU_component_name"] = full_table_catwise["component_name"][clusters_test_all == component]
+            test_table_all["EMU_island_id"] = temp_table_allwise["island_id"]
+            test_table_all["EMU_component_id"] = temp_table_allwise["component_id"]
+            test_table_all["EMU_component_name"] = temp_table_allwise["component_name"]
+
+            test_table_cat["EMU_island_id"] = temp_table_catwise["island_id"]
+            test_table_cat["EMU_component_id"] = temp_table_catwise["component_id"]
+            test_table_cat["EMU_component_name"] = temp_table_catwise["component_name"]
 
             
             train_table_all.write(train_file_all, format='ascii.commented_header', overwrite=True)

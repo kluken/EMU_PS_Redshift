@@ -4,6 +4,7 @@ Models/*
 Data/*
 Scripts/*.pdf
 Scripts/*.ipynb
+*.png
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

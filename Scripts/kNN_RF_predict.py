@@ -18,9 +18,9 @@ def main():
     atlas_file = "../Data/ATLAS_Corrected.fits"
     stripe_file = "../Data/Stripe_Corrected.fits"
     sdss_file = "../Data/RGZ_Corrected.fits"
-    bootes_file = "../../Data/Bootes_Corrected.fits"
-    cosmos_file = "../../Data/COSMOS_Corrected.fits"
-    en1_file = "../../Data/EN1_Corrected.fits"
+    bootes_file = "../Data/Bootes_Corrected.fits"
+    cosmos_file = "../Data/COSMOS_Corrected.fits"
+    en1_file = "../Data/EN1_Corrected.fits"
     pred_file = "../Data/EMU_PS_Clean.fits"
     pred_file_allwise = "../Data/EMU_PS_Clean_AllWISE_2.fits"
 

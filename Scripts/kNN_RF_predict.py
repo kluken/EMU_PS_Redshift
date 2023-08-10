@@ -170,7 +170,6 @@ def main():
     print(out_rates_allwise)
 
     ## Use best k for rest.
-    rand_num = rand_gen.integers(314159)
 
     start_time = datetime.now()
     x_vals_norm_catwise, x_vals_emu_norm_catwise, _, _ = norm_x_vals(

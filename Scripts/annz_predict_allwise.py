@@ -152,7 +152,7 @@ def main():
     pred_file = "../../Data/EMU_PS_Clean_AllWISE_2.fits"
 
     sdss_cols_catwise = [
-        "z",
+        "zspec",
         "g_corrected",
         "r_corrected",
         "i_corrected",
@@ -163,7 +163,7 @@ def main():
         "W4Mag",
     ]
     des_cols_catwise = [
-        "z",
+        "zspec",
         "mag_auto_g",
         "mag_auto_r",
         "mag_auto_i",

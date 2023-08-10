@@ -2,6 +2,8 @@ Containers/*.sif
 .DS_Store
 Models/*
 Data/*
+Data/ATLAS_Corrected.fits
+*.fits
 Scripts/*.pdf
 Scripts/*.ipynb
 *.png

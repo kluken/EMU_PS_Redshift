@@ -170,6 +170,9 @@ def main():
     atlas_file = "../../Data/ATLAS_Corrected.fits"
     stripe_file = "../../Data/Stripe_Corrected.fits"
     sdss_file = "../../Data/RGZ_Corrected.fits"
+    bootes_file = "../../Data/Bootes_Corrected.fits"
+    cosmos_file = "../../Data/COSMOS_Corrected.fits"
+    en1_file = "../../Data/EN1_Corrected.fits"
     pred_file = "../../Data/EMU_PS_Clean.fits"
     pred_file_allwise = "../../Data/EMU_PS_Clean_AllWISE_2.fits"
 
@@ -281,16 +284,36 @@ def main():
     atlas_data_catwise = read_fits(atlas_file, des_cols_catwise)
     stripe_data_catwise = read_fits(stripe_file, des_cols_catwise)
     sdss_data_catwise = read_fits(sdss_file, sdss_cols_catwise)
+    cosmos_data_catwise = read_fits(cosmos_file, sdss_cols_catwise)
+    bootes_data_catwise = read_fits(bootes_file, sdss_cols_catwise)
+    en1_data_catwise = read_fits(en1_file, sdss_cols_catwise)
 
     atlas_data_allwise = read_fits(atlas_file, des_cols_allwise)
     stripe_data_allwise = read_fits(stripe_file, des_cols_allwise)
     sdss_data_allwise = read_fits(sdss_file, sdss_cols_allwise)
+    cosmos_data_allwise = read_fits(cosmos_file, sdss_cols_allwise)
+    bootes_data_allwise = read_fits(bootes_file, sdss_cols_allwise)
+    en1_data_allwise = read_fits(en1_file, sdss_cols_allwise)
 
     combined_train_data_catwise = np.vstack(
-        (atlas_data_catwise, stripe_data_catwise, sdss_data_catwise)
+        (
+            atlas_data_catwise,
+            stripe_data_catwise,
+            sdss_data_catwise,
+            cosmos_data_catwise,
+            bootes_data_catwise,
+            en1_data_catwise,
+        )
     )
     combined_train_data_allwise = np.vstack(
-        (atlas_data_allwise, stripe_data_allwise, sdss_data_allwise)
+        (
+            atlas_data_allwise,
+            stripe_data_allwise,
+            sdss_data_allwise,
+            cosmos_data_allwise,
+            bootes_data_allwise,
+            en1_data_allwise,
+        )
     )
 
     x_vals_emu_catwise = read_fits(pred_file, pred_cols)

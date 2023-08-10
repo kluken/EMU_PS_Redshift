@@ -187,9 +187,14 @@ def main():
     atlas_data = read_fits(atlas_file, des_cols_catwise)
     stripe_data = read_fits(stripe_file, des_cols_catwise)
     sdss_data = read_fits(sdss_file, sdss_cols_catwise)
+    cosmos_data = read_fits(cosmos_file, sdss_cols_catwise)
+    bootes_data = read_fits(bootes_file, sdss_cols_catwise)
+    en1_data = read_fits(en1_file, sdss_cols_catwise)
     pred_data = read_fits(pred_file, pred_cols)
 
-    combined_data = np.vstack((atlas_data, stripe_data, sdss_data))
+    combined_data = np.vstack(
+        (atlas_data, stripe_data, sdss_data, cosmos_data, bootes_data, en1_data)
+    )
 
     x_vals = combined_data[:, 1:]
     y_vals = combined_data[:, 0]
@@ -227,7 +232,7 @@ def main():
 
     train_file_name = "train_allwise_" + str(rand_seed) + ".csv"
     test_file_name = "valid_allwise_" + str(rand_seed) + ".csv"
-    pred_file_name = "pred_allwise_" + str(rand_seed) + "_catwise.csv"
+    pred_file_name = "pred_allwise_" + str(rand_seed) + ".csv"
     train_numpy_df = pd.DataFrame(data=train_numpy, columns=col_names)
     train_numpy_df.to_csv(train_file_name, index=False)
     test_numpy_df = pd.DataFrame(data=test_numpy, columns=col_names)
@@ -259,9 +264,7 @@ def main():
     glob.annz["splitTypeTest"] = (
         "valid_allwise_" + str(rand_seed) + ".csv"
     )  # Validation Set
-    glob.annz["inAsciiFiles"] = (
-        "pred_allwise_" + str(rand_seed) + "_catwise.csv"
-    )  # Test Set
+    glob.annz["inAsciiFiles"] = "pred_allwise_" + str(rand_seed) + ".csv"  # Test Set
     glob.annz[
         "inAsciiVars"
     ] = "D:z;F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag;D:W3mag;D:W4mag"  # Input variables

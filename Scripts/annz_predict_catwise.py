@@ -208,9 +208,7 @@ def main():
         "mag_i",
         "mag_z",
         "W1Mag",
-        "W2Mag",
-        "W3Mag",
-        "W4Mag",
+        "W2Mag"
     ]
 
     pred_col_names = [
@@ -219,9 +217,7 @@ def main():
         "mag_i",
         "mag_z",
         "W1Mag",
-        "W2Mag",
-        "W3Mag",
-        "W4Mag",
+        "W2Mag"
     ]
 
     train_file_name = "train_catwise_" + str(rand_seed) + ".csv"
@@ -261,7 +257,7 @@ def main():
     glob.annz["inAsciiFiles"] = "pred_catwise_" + str(rand_seed) + ".csv"  # Test Set
     glob.annz[
         "inAsciiVars"
-    ] = "D:z;F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag;D:W3mag;D:W4mag"  # Input variables
+    ] = "D:z;F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag"  # Input variables
 
     # Output Settings:
     glob.annz[
@@ -293,10 +289,10 @@ def main():
         glob.annz["inAsciiFiles_wgtKNN"] = "test_" + str(rand_seed) + ".csv"
         glob.annz[
             "inAsciiVars_wgtKNN"
-        ] = "D:z;F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag;D:W3mag;D:W4mag"
+        ] = "D:z;F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag"
         glob.annz[
             "weightVarNames_wgtKNN"
-        ] = "mag_g;mag_r;mag_i;mag_z;W1mag;W2mag;W3mag;W4mag"
+        ] = "mag_g;mag_r;mag_i;mag_z;W1mag;W2mag"
         glob.annz[
             "sampleFracInp_wgtKNN"
         ] = 1  # fraction of dataset to use (positive number, smaller or equal to 1)
@@ -333,7 +329,7 @@ def main():
         ):
             continue
 
-        glob.annz["inputVariables"] = "W1mag;W2mag;W3mag;W4mag;mag_g;mag_r;mag_i;mag_z"
+        glob.annz["inputVariables"] = "W1mag;W2mag;mag_g;mag_r;mag_i;mag_z"
         glob.annz[
             "inputVarErrors"
         ] = ""  # Or add errors if wanted - finding by kNN seems to work
@@ -438,7 +434,7 @@ def main():
     glob.annz["doEval"] = True
     glob.annz[
         "inAsciiVars"
-    ] = "F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag;D:W3mag;D:W4mag"  # Input variables
+    ] = "F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag"  # Input variables
 
     # run ANNZ with the current settings
     runANNZ()

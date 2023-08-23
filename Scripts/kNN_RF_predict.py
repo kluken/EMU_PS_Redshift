@@ -134,11 +134,11 @@ def main():
     overall_start = datetime.now()
     # Regression tests
     ## Initial run - finds value of "k" to use, and generates plots.
-    # folder_name = "kNN_Regress"
+    folder_name = "kNN_Regress"
 
-    # if not os.path.exists(folder_name):
-    #     os.makedirs(folder_name)
-    # os.chdir(folder_name)
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+    os.chdir(folder_name)
 
     ## Find the best value of k to use
     k_range = range(3, 31, 2)
@@ -241,96 +241,97 @@ def main():
         os.makedirs(folder_name)
     os.chdir(folder_name)
 
-    # Regression tests
-    ## Initial run - finds value of "k" to use, and generates plots.
-    overall_start = datetime.now()
-    # x_vals_train, x_vals_test, _, _ = norm_x_vals(x_vals_train, x_vals_test)
 
-    ## Find the best value of k to use
-    tree_range = range(2, 201, 1)
-    k_fold_val = 5
-    random_seed_kfold = 42
-    out_rates_catwise = []
-    out_rates_allwise = []
+#     # Regression tests
+#     ## Initial run - finds value of "k" to use, and generates plots.
+#     overall_start = datetime.now()
+#     # x_vals_train, x_vals_test, _, _ = norm_x_vals(x_vals_train, x_vals_test)
 
-    for tree_val in tqdm(tree_range):
-        out_rates_catwise.append(
-            rf_cross_val(
-                tree_val, k_fold_val, x_vals_catwise, y_vals_catwise, random_seed_kfold
-            )
-        )
-        out_rates_allwise.append(
-            rf_cross_val(
-                tree_val, k_fold_val, x_vals_allwise, y_vals_allwise, random_seed_kfold
-            )
-        )
-    best_tree_catwise = tree_range[np.argmin(out_rates_catwise)]
-    best_tree_allwise = tree_range[np.argmin(out_rates_allwise)]
-    # best_tree_catwise = 170
-    # best_tree_allwise = 173
-    print("Best Tree Value | Best Outlier Rate -- CatWISE")
-    print(f"{best_tree_catwise} | {np.round(np.min(out_rates_catwise),2)}")
-    # 170 | 9.64%
-    print("Best Tree Value | Best Outlier Rate -- AllWISE")
-    print(f"{best_tree_allwise} | {np.round(np.min(out_rates_allwise),2)}")
-    # 173 | 9.89%
+#     ## Find the best value of k to use
+#     tree_range = range(2, 201, 1)
+#     k_fold_val = 5
+#     random_seed_kfold = 42
+#     out_rates_catwise = []
+#     out_rates_allwise = []
 
-    x_vals_norm_catwise, x_vals_emu_norm_catwise, _, _ = norm_x_vals(
-        x_vals_catwise, x_vals_emu_catwise
-    )
-    x_vals_norm_allwise, x_vals_emu_norm_allwise, _, _ = norm_x_vals(
-        x_vals_allwise, x_vals_emu_allwise
-    )
+#     for tree_val in tqdm(tree_range):
+#         out_rates_catwise.append(
+#             rf_cross_val(
+#                 tree_val, k_fold_val, x_vals_catwise, y_vals_catwise, random_seed_kfold
+#             )
+#         )
+#         out_rates_allwise.append(
+#             rf_cross_val(
+#                 tree_val, k_fold_val, x_vals_allwise, y_vals_allwise, random_seed_kfold
+#             )
+#         )
+#     best_tree_catwise = tree_range[np.argmin(out_rates_catwise)]
+#     best_tree_allwise = tree_range[np.argmin(out_rates_allwise)]
+#     # best_tree_catwise = 170
+#     # best_tree_allwise = 173
+#     print("Best Tree Value | Best Outlier Rate -- CatWISE")
+#     print(f"{best_tree_catwise} | {np.round(np.min(out_rates_catwise),2)}")
+#     # 170 | 9.64%
+#     print("Best Tree Value | Best Outlier Rate -- AllWISE")
+#     print(f"{best_tree_allwise} | {np.round(np.min(out_rates_allwise),2)}")
+#     # 173 | 9.89%
 
-    pred_catwise, model_catwise = rf_pred(
-        best_tree_catwise, x_vals_norm_catwise, x_vals_emu_norm_catwise, y_vals_catwise
-    )
-    pred_allwise, model_allwise = rf_pred(
-        best_tree_allwise, x_vals_norm_allwise, x_vals_emu_norm_allwise, y_vals_allwise
-    )
+#     x_vals_norm_catwise, x_vals_emu_norm_catwise, _, _ = norm_x_vals(
+#         x_vals_catwise, x_vals_emu_catwise
+#     )
+#     x_vals_norm_allwise, x_vals_emu_norm_allwise, _, _ = norm_x_vals(
+#         x_vals_allwise, x_vals_emu_allwise
+#     )
 
-    uncert_catwise = fci.random_forest_error(
-        model_catwise, x_vals_norm_catwise, x_vals_emu_norm_catwise
-    )
-    uncert_allwise = fci.random_forest_error(
-        model_allwise, x_vals_norm_allwise, x_vals_emu_norm_allwise
-    )
+#     pred_catwise, model_catwise = rf_pred(
+#         best_tree_catwise, x_vals_norm_catwise, x_vals_emu_norm_catwise, y_vals_catwise
+#     )
+#     pred_allwise, model_allwise = rf_pred(
+#         best_tree_allwise, x_vals_norm_allwise, x_vals_emu_norm_allwise, y_vals_allwise
+#     )
 
-    uncert_allwise = np.sqrt(uncert_allwise)
-    uncert_catwise = np.sqrt(uncert_catwise)
+#     uncert_catwise = fci.random_forest_error(
+#         model_catwise, x_vals_norm_catwise, x_vals_emu_norm_catwise
+#     )
+#     uncert_allwise = fci.random_forest_error(
+#         model_allwise, x_vals_norm_allwise, x_vals_emu_norm_allwise
+#     )
 
-    prediction_filename_catwise = "predictions_catwise.csv"
-    df = pd.DataFrame(
-        {
-            "EMU_island_id": full_table_catwise["island_id"],
-            "EMU_component_id": full_table_catwise["component_id"],
-            "EMU_component_name": full_table_catwise["component_name"],
-            "Pred_z": pred_catwise,
-            "Uncertainty": uncert_catwise,
-        }
-    )
+#     uncert_allwise = np.sqrt(uncert_allwise)
+#     uncert_catwise = np.sqrt(uncert_catwise)
 
-    # df = pd.DataFrame({"Pred_z" : pred_catwise})
-    df.to_csv(prediction_filename_catwise, index=False)
-    model_filename = "model_catwise.pickle"
-    with open(model_filename, "wb") as pickle_file:
-        pickle.dump(model_catwise, pickle_file)
+#     prediction_filename_catwise = "predictions_catwise.csv"
+#     df = pd.DataFrame(
+#         {
+#             "EMU_island_id": full_table_catwise["island_id"],
+#             "EMU_component_id": full_table_catwise["component_id"],
+#             "EMU_component_name": full_table_catwise["component_name"],
+#             "Pred_z": pred_catwise,
+#             "Uncertainty": uncert_catwise,
+#         }
+#     )
 
-    prediction_filename = "predictions_allwise.csv"
-    # df = pd.DataFrame({"Pred_z" : pred_allwise})
-    df = pd.DataFrame(
-        {
-            "EMU_island_id": full_table_allwise["island_id"],
-            "EMU_component_id": full_table_allwise["component_id"],
-            "EMU_component_name": full_table_allwise["component_name"],
-            "Pred_z": pred_allwise,
-            "Uncertainty": uncert_allwise,
-        }
-    )
-    df.to_csv(prediction_filename, index=False)
-    model_filename = "model_allwise.pickle"
-    with open(model_filename, "wb") as pickle_file:
-        pickle.dump(model_allwise, pickle_file)
+#     # df = pd.DataFrame({"Pred_z" : pred_catwise})
+#     df.to_csv(prediction_filename_catwise, index=False)
+#     model_filename = "model_catwise.pickle"
+#     with open(model_filename, "wb") as pickle_file:
+#         pickle.dump(model_catwise, pickle_file)
+
+#     prediction_filename = "predictions_allwise.csv"
+#     # df = pd.DataFrame({"Pred_z" : pred_allwise})
+#     df = pd.DataFrame(
+#         {
+#             "EMU_island_id": full_table_allwise["island_id"],
+#             "EMU_component_id": full_table_allwise["component_id"],
+#             "EMU_component_name": full_table_allwise["component_name"],
+#             "Pred_z": pred_allwise,
+#             "Uncertainty": uncert_allwise,
+#         }
+#     )
+#     df.to_csv(prediction_filename, index=False)
+#     model_filename = "model_allwise.pickle"
+#     with open(model_filename, "wb") as pickle_file:
+#         pickle.dump(model_allwise, pickle_file)
 
 
 if __name__ == "__main__":

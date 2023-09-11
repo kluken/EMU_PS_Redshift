@@ -149,7 +149,7 @@ def main():
     bootes_file = "../../Data/Bootes_Corrected.fits"
     cosmos_file = "../../Data/COSMOS_Corrected.fits"
     en1_file = "../../Data/EN1_Corrected.fits"
-    pred_file = "../../Data/EMU_PS_Clean_AllWISE_2.fits"
+    pred_file = "../../Data/EMU_PS_Clean.fits"
 
     sdss_cols_catwise = [
         "zspec",
@@ -201,24 +201,9 @@ def main():
     train_numpy = np.hstack((np.expand_dims(y_vals_train, axis=1), x_vals_train))
     test_numpy = np.hstack((np.expand_dims(y_vals_test, axis=1), x_vals_test))
 
-    col_names = [
-        "#z",
-        "mag_g",
-        "mag_r",
-        "mag_i",
-        "mag_z",
-        "W1Mag",
-        "W2Mag"
-    ]
+    col_names = ["#z", "mag_g", "mag_r", "mag_i", "mag_z", "W1Mag", "W2Mag"]
 
-    pred_col_names = [
-        "#mag_g",
-        "mag_r",
-        "mag_i",
-        "mag_z",
-        "W1Mag",
-        "W2Mag"
-    ]
+    pred_col_names = ["#mag_g", "mag_r", "mag_i", "mag_z", "W1Mag", "W2Mag"]
 
     train_file_name = "train_catwise_" + str(rand_seed) + ".csv"
     test_file_name = "valid_catwise_" + str(rand_seed) + ".csv"
@@ -290,9 +275,7 @@ def main():
         glob.annz[
             "inAsciiVars_wgtKNN"
         ] = "D:z;F:mag_g;F:mag_r;F:mag_i;F:mag_z;D:W1mag;D:W2mag"
-        glob.annz[
-            "weightVarNames_wgtKNN"
-        ] = "mag_g;mag_r;mag_i;mag_z;W1mag;W2mag"
+        glob.annz["weightVarNames_wgtKNN"] = "mag_g;mag_r;mag_i;mag_z;W1mag;W2mag"
         glob.annz[
             "sampleFracInp_wgtKNN"
         ] = 1  # fraction of dataset to use (positive number, smaller or equal to 1)

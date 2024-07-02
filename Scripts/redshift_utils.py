@@ -209,7 +209,6 @@ def kNN(k_val, xValsTrain, xValsTest, yValsTrain, yValsTest):
         xValsTrain (np.array): 2-d np.array holding the photometry used for training
         xValsTest (np.array): 2-d np.array holding the photometry used for testing
         yValsTrain (np.array): 1-d np.array holding the measured redshift for training
-        yValsTest (np.array): 1-d np.array holding the measured redshift for testing
 
     Returns:
         np.array: 1-d np.array holding the predictions
@@ -220,6 +219,26 @@ def kNN(k_val, xValsTrain, xValsTest, yValsTrain, yValsTest):
     predictions = neigh.predict(xValsTest.astype(np.float64))
         
     return predictions.ravel(), neigh.score(xValsTest,np.squeeze(yValsTest)), neigh
+
+def kNN_pred(k_val, xValsTrain, xValsTest, yValsTrain):
+    """Run kNN regression
+
+    Args:
+        kVal (int): Value to use as k for kNN
+        xValsTrain (np.array): 2-d np.array holding the photometry used for training
+        xValsTest (np.array): 2-d np.array holding the photometry used for testing
+        yValsTrain (np.array): 1-d np.array holding the measured redshift for training
+        yValsTest (np.array): 1-d np.array holding the measured redshift for testing
+
+    Returns:
+        np.array: 1-d np.array holding the predictions
+        float: R^2 Coefficient of Determination. 
+    """
+    neigh = KNeighborsRegressor(n_neighbors=k_val, metric = "mahalanobis", metric_params={"V":np.cov(xValsTrain.astype(np.float64), rowvar=False)})
+    neigh.fit(xValsTrain.astype(np.float64),np.squeeze(yValsTrain).astype(np.float64))
+    predictions = neigh.predict(xValsTest.astype(np.float64))
+        
+    return predictions.ravel(), neigh
 
 def kNN_cross_val(k_val, k_fold_val, random_seed, x_vals_train, y_vals_train, tqdm_disable = False):
     """Run kNN regression
@@ -336,6 +355,28 @@ def rf(treeVal, xValsTrain, xValsTest, yValsTrain, yValsTest, randomState=None):
     rf_model.fit(xValsTrain.astype(np.float64),np.squeeze(yValsTrain).astype(np.float64))
     predictions = rf_model.predict(xValsTest.astype(np.float64))
     return predictions.ravel(), rf_model.score(xValsTest.astype(np.float64),np.squeeze(yValsTest).astype(np.float64)), rf_model
+
+
+def rf_pred(treeVal, xValsTrain, xValsTest, yValsTrain, randomState=None):
+    """Run random forest regression
+
+    Args:
+        treeVal (Integer): Number of trees to use in classififcation
+        xValsTrain (np.array): 2-d numpy array holding the training photometry
+        xValsTest (np.array): 2-d numpy array holding the testing photometry
+        yValsTrain (np.array): 1-d numpy array holding the training redshifts
+        randomState (bool or integer, optional): If nothing given, defaults to 42. Otherwise, sets the random state. Defaults to False.
+
+    Returns:
+        np.array: 1-d np.array holding the predictions
+        float: R^2 Coefficient of Determination. 
+    """
+    if randomState is None:
+        randomState = 42
+    rf_model = RandomForestRegressor(treeVal, random_state=randomState, n_jobs=-1)
+    rf_model.fit(xValsTrain.astype(np.float64),np.squeeze(yValsTrain).astype(np.float64))
+    predictions = rf_model.predict(xValsTest.astype(np.float64))
+    return predictions.ravel(), rf_model
 
 
 def rf_cross_val(tree_val, k_fold_val, x_vals_train, y_vals_train, random_state=42, tqdm_disable=False):

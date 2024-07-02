@@ -157,7 +157,7 @@ def main():
     gpz_opts["USE_MODEL_AS_HINT"] = 0
     gpz_opts["PREDICT_ERROR"] = 1
     gpz_opts["NUM_BF"] = 50
-    gpz_opts["COVARIANCE"] = "gpvd"
+    gpz_opts["COVARIANCE"] = "gpvc"
     gpz_opts["PRIOR_MEAN"] = "constant"
     gpz_opts["OUTPUT_ERROR_TYPE"] = "input_dependent"
     gpz_opts["BF_POSITION_SEED"] = 55
@@ -429,26 +429,26 @@ def main():
 
             comp_y_train_all = y_vals_all[np.where(clusters_train_all == component)]
             comp_x_train_all = x_vals_all[np.where(clusters_train_all == component)]
-            # comp_y_train_cat = y_vals_cat[np.where(clusters_train_cat == component)]
-            # comp_x_train_cat = x_vals_cat[np.where(clusters_train_cat == component)]
+            comp_y_train_cat = y_vals_cat[np.where(clusters_train_cat == component)]
+            comp_x_train_cat = x_vals_cat[np.where(clusters_train_cat == component)]
 
             # comp_y_test = y_vals_test[np.where(clusters_test == component)]
             comp_x_all = x_vals_emu_allwise[np.where(clusters_test_all == component)]
             # comp_y_test = y_vals_test[np.where(clusters_test == component)]
-            # comp_x_cat = x_vals_emu_catwise[np.where(clusters_test_cat == component)]
+            comp_x_cat = x_vals_emu_catwise[np.where(clusters_test_cat == component)]
 
             train_data_all = np.hstack(
                 (np.expand_dims(comp_y_train_all, axis=1), comp_x_train_all)
             )
-            # train_data_cat = np.hstack(
-            #     (np.expand_dims(comp_y_train_cat, axis=1), comp_x_train_cat)
-            # )
+            train_data_cat = np.hstack(
+                (np.expand_dims(comp_y_train_cat, axis=1), comp_x_train_cat)
+            )
 
             # test_data_all = np.hstack((np.expand_dims(comp_y_test, axis=1), comp_x_all))
             # test_data_cat = np.hstack((np.expand_dims(comp_y_test, axis=1), comp_x_cat))
 
             test_data_all = np.array(comp_x_all)
-            # test_data_cat = np.array(comp_x_cat)
+            test_data_cat = np.array(comp_x_cat)
 
             col_names = [
                 "z_spec",
@@ -469,21 +469,21 @@ def main():
                 "magerr_w3",
                 "magerr_w4",
             ]
-            # col_names_cat = [
-            #     "z_spec",
-            #     "mag_g",
-            #     "mag_r",
-            #     "mag_i",
-            #     "mag_z",
-            #     "magerr_g",
-            #     "magerr_r",
-            #     "magerr_i",
-            #     "magerr_z",
-            #     "mag_w1",
-            #     "mag_w2",
-            #     "magerr_w1",
-            #     "magerr_w2",
-            # ]
+            col_names_cat = [
+                "z_spec",
+                "mag_g",
+                "mag_r",
+                "mag_i",
+                "mag_z",
+                "magerr_g",
+                "magerr_r",
+                "magerr_i",
+                "magerr_z",
+                "mag_w1",
+                "mag_w2",
+                "magerr_w1",
+                "magerr_w2",
+            ]
             col_names_pred = [
                 "mag_g",
                 "mag_r",
@@ -502,41 +502,41 @@ def main():
                 "magerr_w3",
                 "magerr_w4",
             ]
-            # col_names_pred_cat = [
-            #     "mag_g",
-            #     "mag_r",
-            #     "mag_i",
-            #     "mag_z",
-            #     "magerr_g",
-            #     "magerr_r",
-            #     "magerr_i",
-            #     "magerr_z",
-            #     "mag_w1",
-            #     "mag_w2",
-            #     "magerr_w1",
-            #     "magerr_w2",
-            # ]
+            col_names_pred_cat = [
+                "mag_g",
+                "mag_r",
+                "mag_i",
+                "mag_z",
+                "magerr_g",
+                "magerr_r",
+                "magerr_i",
+                "magerr_z",
+                "mag_w1",
+                "mag_w2",
+                "magerr_w1",
+                "magerr_w2",
+            ]
 
             train_table_all = Table(train_data_all, names=col_names)
             test_table_all = Table(test_data_all, names=col_names_pred)
-            # train_table_cat = Table(train_data_cat, names=col_names_cat)
-            # test_table_cat = Table(test_data_cat, names=col_names_pred_cat)
+            train_table_cat = Table(train_data_cat, names=col_names_cat)
+            test_table_cat = Table(test_data_cat, names=col_names_pred_cat)
 
             train_file_all = "train_allwise_comp_" + str(component) + ".cat"
             test_file_all = "test_allwise_comp_" + str(component) + ".cat"
-            # train_file_cat = "train_catwise_comp_" + str(component) + ".cat"
-            # test_file_cat = "test_catwise_comp_" + str(component) + ".cat"
+            train_file_cat = "train_catwise_comp_" + str(component) + ".cat"
+            test_file_cat = "test_catwise_comp_" + str(component) + ".cat"
 
             temp_table_allwise = full_table_allwise[clusters_test_all == component]
-            # temp_table_catwise = full_table_catwise[clusters_test_cat == component]
+            temp_table_catwise = full_table_catwise[clusters_test_cat == component]
 
             test_table_all["EMU_island_id"] = temp_table_allwise["island_id"]
             test_table_all["EMU_component_id"] = temp_table_allwise["component_id"]
             test_table_all["EMU_component_name"] = temp_table_allwise["component_name"]
 
-            # test_table_cat["EMU_island_id"] = temp_table_catwise["island_id"]
-            # test_table_cat["EMU_component_id"] = temp_table_catwise["component_id"]
-            # test_table_cat["EMU_component_name"] = temp_table_catwise["component_name"]
+            test_table_cat["EMU_island_id"] = temp_table_catwise["island_id"]
+            test_table_cat["EMU_component_id"] = temp_table_catwise["component_id"]
+            test_table_cat["EMU_component_name"] = temp_table_catwise["component_name"]
 
             train_table_all.write(
                 train_file_all, format="ascii.commented_header", overwrite=True
@@ -544,12 +544,12 @@ def main():
             test_table_all.write(
                 test_file_all, format="ascii.commented_header", overwrite=True
             )
-            # train_table_cat.write(
-            #     train_file_cat, format="ascii.commented_header", overwrite=True
-            # )
-            # test_table_cat.write(
-            #     test_file_cat, format="ascii.commented_header", overwrite=True
-            # )
+            train_table_cat.write(
+                train_file_cat, format="ascii.commented_header", overwrite=True
+            )
+            test_table_cat.write(
+                test_file_cat, format="ascii.commented_header", overwrite=True
+            )
 
             gpz_opts["TRAINING_CATALOG"] = (
                 "train_allwise_comp_" + str(component) + ".cat"
@@ -570,25 +570,25 @@ def main():
             cmd = ["gpz++", gpz_file]
             subprocess.Popen(cmd).wait()
 
-            # gpz_opts["TRAINING_CATALOG"] = (
-            #     "train_catwise_comp_" + str(component) + ".cat"
-            # )
-            # gpz_opts["PREDICTION_CATALOG"] = (
-            #     "test_catwise_comp_" + str(component) + ".cat"
-            # )
-            # gpz_opts["OUTPUT_CATALOG"] = "pred_catwise_comp_" + str(component) + ".txt"
-            # gpz_opts["MODEL_FILE"] = "model_catwise_comp_" + str(component) + ".cat"
+            gpz_opts["TRAINING_CATALOG"] = (
+                "train_catwise_comp_" + str(component) + ".cat"
+            )
+            gpz_opts["PREDICTION_CATALOG"] = (
+                "test_catwise_comp_" + str(component) + ".cat"
+            )
+            gpz_opts["OUTPUT_CATALOG"] = "pred_catwise_comp_" + str(component) + ".txt"
+            gpz_opts["MODEL_FILE"] = "model_catwise_comp_" + str(component) + ".cat"
 
-            # gpz_file = "gpz_params_catwise_comp_" + str(component) + ".param"
+            gpz_file = "gpz_params_catwise_comp_" + str(component) + ".param"
 
-            # out_file = open(gpz_file, "w")
-            # for param in gpz_opts:
-            #     out_file.write("{0:30s} = {1}\n".format(param, gpz_opts[param]))
-            # out_file.close()
+            out_file = open(gpz_file, "w")
+            for param in gpz_opts:
+                out_file.write("{0:30s} = {1}\n".format(param, gpz_opts[param]))
+            out_file.close()
 
-            # cmd = ["gpz++", gpz_file]
-            # subprocess.Popen(cmd).wait()
-            # print("\n#############################\n")
+            cmd = ["gpz++", gpz_file]
+            subprocess.Popen(cmd).wait()
+            print("\n#############################\n")
 
     pred_all_file_name = "pred_allwise_comp_0.txt"
     train_all_file_name = "train_allwise_comp_0.cat"
@@ -603,28 +603,28 @@ def main():
         test_all_file_name, format="ascii.commented_header"
     )
 
-    # pred_cat_file_name = "pred_catwise_comp_0.txt"
-    # train_cat_file_name = "train_catwise_comp_0.cat"
-    # test_cat_file_name = "test_catwise_comp_0.cat"
-    # pred_cat_table_stack = Table.read(
-    #     pred_cat_file_name, format="ascii.commented_header", header_start=10
-    # )
-    # train_cat_table_stack = Table.read(
-    #     train_cat_file_name, format="ascii.commented_header"
-    # )
-    # test_cat_table_stack = Table.read(
-    #     test_cat_file_name, format="ascii.commented_header"
-    # )
+    pred_cat_file_name = "pred_catwise_comp_0.txt"
+    train_cat_file_name = "train_catwise_comp_0.cat"
+    test_cat_file_name = "test_catwise_comp_0.cat"
+    pred_cat_table_stack = Table.read(
+        pred_cat_file_name, format="ascii.commented_header", header_start=10
+    )
+    train_cat_table_stack = Table.read(
+        train_cat_file_name, format="ascii.commented_header"
+    )
+    test_cat_table_stack = Table.read(
+        test_cat_file_name, format="ascii.commented_header"
+    )
 
     test_all_table_stack["prediction"] = pred_all_table_stack["value"]
     test_all_table_stack["prediction_uncert"] = pred_all_table_stack["uncertainty"]
     test_all_table_stack["comp_no"] = 0
     train_all_table_stack["comp_no"] = 0
 
-    # test_cat_table_stack["prediction"] = pred_cat_table_stack["value"]
-    # test_cat_table_stack["prediction_uncert"] = pred_cat_table_stack["uncertainty"]
-    # test_cat_table_stack["comp_no"] = 0
-    # train_cat_table_stack["comp_no"] = 0
+    test_cat_table_stack["prediction"] = pred_cat_table_stack["value"]
+    test_cat_table_stack["prediction_uncert"] = pred_cat_table_stack["uncertainty"]
+    test_cat_table_stack["comp_no"] = 0
+    train_cat_table_stack["comp_no"] = 0
 
     for component in np.arange(1, gmm_model_cat.n_components):
         pred_all_file_name = "pred_allwise_comp_" + str(component) + ".txt"
@@ -646,30 +646,30 @@ def main():
         else:
             print(f"No EMU AllWISE sources in Component {component}")
 
-        # pred_cat_file_name = "pred_catwise_comp_" + str(component) + ".txt"
-        # test_cat_file_name = "test_catwise_comp_" + str(component) + ".cat"
-        # train_cat_file_name = "train_catwise_comp_" + str(component) + ".cat"
-        # test_cat_table = Table.read(test_cat_file_name, format="ascii.commented_header")
-        # train_cat_table = Table.read(
-        #     train_cat_file_name, format="ascii.commented_header"
-        # )
-        # if len(test_cat_table) > 0:
-        #     try:
-        #         pred_cat_table = Table.read(
-        #             pred_cat_file_name, format="ascii.commented_header", header_start=10
-        #         )
-        #         test_cat_table["prediction"] = pred_cat_table["value"]
-        #         test_cat_table["prediction_uncert"] = pred_cat_table["uncertainty"]
-        #         test_cat_table["comp_no"] = component
-        #         train_cat_table["comp_no"] = component
-        #         test_cat_table_stack = vstack([test_cat_table_stack, test_cat_table])
-        #     except:
-        #         print(f"No EMU CatWISE sources in Component {component}")
-        # else:
-        #     print(f"No EMU CatWISE sources in Component {component}")
+        pred_cat_file_name = "pred_catwise_comp_" + str(component) + ".txt"
+        test_cat_file_name = "test_catwise_comp_" + str(component) + ".cat"
+        train_cat_file_name = "train_catwise_comp_" + str(component) + ".cat"
+        test_cat_table = Table.read(test_cat_file_name, format="ascii.commented_header")
+        train_cat_table = Table.read(
+            train_cat_file_name, format="ascii.commented_header"
+        )
+        if len(test_cat_table) > 0:
+            try:
+                pred_cat_table = Table.read(
+                    pred_cat_file_name, format="ascii.commented_header", header_start=10
+                )
+                test_cat_table["prediction"] = pred_cat_table["value"]
+                test_cat_table["prediction_uncert"] = pred_cat_table["uncertainty"]
+                test_cat_table["comp_no"] = component
+                train_cat_table["comp_no"] = component
+                test_cat_table_stack = vstack([test_cat_table_stack, test_cat_table])
+            except:
+                print(f"No EMU CatWISE sources in Component {component}")
+        else:
+            print(f"No EMU CatWISE sources in Component {component}")
 
         train_all_table_stack = vstack([train_all_table_stack, train_all_table])
-        # train_cat_table_stack = vstack([train_cat_table_stack, train_cat_table])
+        train_cat_table_stack = vstack([train_cat_table_stack, train_cat_table])
 
     test_all_table_stack.write(
         "predictions_allwise_seed_" + str(seed) + "_comp_" + str(gmm_comp) + ".csv",
@@ -682,16 +682,16 @@ def main():
         overwrite=True,
     )
 
-    # test_cat_table_stack.write(
-    #     "predictions_catwise_seed_" + str(seed) + "_comp_" + str(gmm_comp) + ".csv",
-    #     format="csv",
-    #     overwrite=True,
-    # )
-    # train_cat_table_stack.write(
-    #     "train_catwise_seed_" + str(seed) + "_comp_" + str(gmm_comp) + ".csv",
-    #     format="csv",
-    #     overwrite=True,
-    # )
+    test_cat_table_stack.write(
+        "predictions_catwise_seed_" + str(seed) + "_comp_" + str(gmm_comp) + ".csv",
+        format="csv",
+        overwrite=True,
+    )
+    train_cat_table_stack.write(
+        "train_catwise_seed_" + str(seed) + "_comp_" + str(gmm_comp) + ".csv",
+        format="csv",
+        overwrite=True,
+    )
 
 
 if __name__ == "__main__":

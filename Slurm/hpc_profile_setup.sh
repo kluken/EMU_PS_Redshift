@@ -2,7 +2,7 @@
 
 # OzStar:
 export APPTAINER_BINDPATH="/fred/oz237/kluken/EMU-PS/EMU_PS_Redshift/"
-module load apptainer/latest
+module load apptainer
 
 # Singularity:
 # export SINGULARITY_BINDPATH="/some/location/"

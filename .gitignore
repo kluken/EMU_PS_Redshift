@@ -4,6 +4,9 @@ Models/*
 Data/*
 Data/ATLAS_Corrected.fits
 *.fits
+*.csv
+*.jpg
+*.tex
 Scripts/*.pdf
 Scripts/*.ipynb
 *.png

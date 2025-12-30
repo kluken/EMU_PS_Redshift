@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH -t 30
+#SBATCH -t 120
 #SBATCH --mem=4096MB
 #SBATCH -n 4
 #SBATCH --tmp=4096MB

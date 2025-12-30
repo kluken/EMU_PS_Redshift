@@ -39,7 +39,7 @@ def main():
     gpz_opts["USE_MODEL_AS_HINT"] = 0
     gpz_opts["PREDICT_ERROR"] = 1
     gpz_opts["NUM_BF"] = 50
-    gpz_opts["COVARIANCE"] = "gpvd"
+    gpz_opts["COVARIANCE"] = "gpvc"
     gpz_opts["PRIOR_MEAN"] = "constant"
     gpz_opts["OUTPUT_ERROR_TYPE"] = "input_dependent"
     gpz_opts["BF_POSITION_SEED"] = 55

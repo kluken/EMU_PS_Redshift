@@ -9,7 +9,7 @@ import pandas as pd
 from datetime import datetime
 from sklearn.metrics import mean_squared_error
 from astropy.table import Table
-import forestci as fci
+# import forestci as fci
 
 
 def main():
@@ -51,7 +51,7 @@ def main():
         "mag_auto_i",
         "mag_auto_z",
         "W1Mag",
-        "W2Mag",
+        "W2Mag"
     ]
     des_cols_allwise = [
         "zspec",
@@ -62,7 +62,7 @@ def main():
         "W1Mag",
         "W2Mag",
         "W3Mag",
-        "W4Mag",
+        "W4Mag"
     ]
 
     pred_cols = [
@@ -72,6 +72,12 @@ def main():
         "mag_auto_z",
         "w1mag",
         "w2mag",
+        "magerr_auto_g",
+        "magerr_auto_r",
+        "magerr_auto_i",
+        "magerr_auto_z",
+        "w1sigm",
+        "w2sigm",
     ]
     pred_allwise_cols = [
         "mag_auto_g",
@@ -82,6 +88,14 @@ def main():
         "W2mag_x",
         "W3mag",
         "W4mag",
+        "magerr_auto_g",
+        "magerr_auto_r",
+        "magerr_auto_i",
+        "magerr_auto_z",
+        "e_W1Mag",
+        "e_W2Mag",
+        "e_W3Mag",
+        "e_W4Mag",
     ]
 
     full_table_catwise = Table.read(pred_file).to_pandas()
@@ -122,8 +136,65 @@ def main():
         )
     )
 
-    x_vals_emu_catwise = read_fits(pred_file, pred_cols)
-    x_vals_emu_allwise = read_fits(pred_file_allwise, pred_allwise_cols)
+    x_vals_emu_catwise = read_fits(pred_file, pred_cols)[:, :6]
+    x_vals_emu_allwise = read_fits(pred_file_allwise, pred_allwise_cols)[:, :8]
+
+    x_vals_errors_emu_catwise = read_fits(pred_file, pred_cols)[:, 6:]
+    x_vals_errors_emu_allwise = read_fits(pred_file_allwise, pred_allwise_cols)[:, 8:]
+
+    x_vals_errors_emu_allwise[np.where(x_vals_errors_emu_allwise[:, -4] == -99), -4] = np.nanmax(
+        x_vals_errors_emu_allwise[:, -4]
+    )
+    x_vals_errors_emu_allwise[np.where(x_vals_errors_emu_allwise[:, -3] == -99), -3] = np.nanmax(
+        x_vals_errors_emu_allwise[:, -3]
+    )
+    x_vals_errors_emu_allwise[np.where(x_vals_errors_emu_allwise[:, -2] == -99), -2] = np.nanmax(
+        x_vals_errors_emu_allwise[:, -2]
+    )
+    x_vals_errors_emu_allwise[np.where(x_vals_errors_emu_allwise[:, -1] == -99), -1] = np.max(
+        x_vals_errors_emu_allwise[:, -1]
+    )
+
+    x_vals_errors_emu_allwise[np.where(np.isnan(x_vals_errors_emu_allwise[:, -4])), -4] = np.nanmax(
+        x_vals_errors_emu_allwise[:, -4]
+    )
+    x_vals_errors_emu_allwise[np.where(np.isnan(x_vals_errors_emu_allwise[:, -3])), -3] = np.nanmax(
+        x_vals_errors_emu_allwise[:, -3]
+    )
+    x_vals_errors_emu_allwise[np.where(np.isnan(x_vals_errors_emu_allwise[:, -2])), -2] = np.nanmax(
+        x_vals_errors_emu_allwise[:, -2]
+    )
+    x_vals_errors_emu_allwise[np.where(np.isnan(x_vals_errors_emu_allwise[:, -1])), -1] = np.nanmax(
+        x_vals_errors_emu_allwise[:, -1]
+    )
+
+    x_vals_errors_emu_catwise[np.where(x_vals_errors_emu_catwise[:, -4] == -99), -4] = np.nanmax(
+        x_vals_errors_emu_catwise[:, -4]
+    )
+    x_vals_errors_emu_catwise[np.where(x_vals_errors_emu_catwise[:, -3] == -99), -3] = np.nanmax(
+        x_vals_errors_emu_catwise[:, -3]
+    )
+    x_vals_errors_emu_catwise[np.where(x_vals_errors_emu_catwise[:, -2] == -99), -2] = np.nanmax(
+        x_vals_errors_emu_catwise[:, -2]
+    )
+    x_vals_errors_emu_catwise[np.where(x_vals_errors_emu_catwise[:, -1] == -99), -1] = np.max(
+        x_vals_errors_emu_catwise[:, -1]
+    )
+
+    x_vals_errors_emu_catwise[np.where(np.isnan(x_vals_errors_emu_catwise[:, -4])), -4] = np.nanmax(
+        x_vals_errors_emu_catwise[:, -4]
+    )
+    x_vals_errors_emu_catwise[np.where(np.isnan(x_vals_errors_emu_catwise[:, -3])), -3] = np.nanmax(
+        x_vals_errors_emu_catwise[:, -3]
+    )
+    x_vals_errors_emu_catwise[np.where(np.isnan(x_vals_errors_emu_catwise[:, -2])), -2] = np.nanmax(
+        x_vals_errors_emu_catwise[:, -2]
+    )
+    x_vals_errors_emu_catwise[np.where(np.isnan(x_vals_errors_emu_catwise[:, -1])), -1] = np.nanmax(
+        x_vals_errors_emu_catwise[:, -1]
+    )
+
+
 
     x_vals_catwise = combined_train_data_catwise[:, 1:]
     y_vals_catwise = combined_train_data_catwise[:, 0]
@@ -134,7 +205,7 @@ def main():
     overall_start = datetime.now()
     # Regression tests
     ## Initial run - finds value of "k" to use, and generates plots.
-    folder_name = "kNN_Regress"
+    folder_name = "kNN_Regress_montecarlo"
 
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
@@ -179,29 +250,29 @@ def main():
         x_vals_allwise, x_vals_emu_allwise
     )
 
-    pred_catwise, model_catwise = kNN_pred(
-        best_k_catwise, x_vals_norm_catwise, x_vals_emu_norm_catwise, y_vals_catwise
+    pred_catwise, uncert_catwise, model_catwise = kNN_pred_errors(
+        best_k_catwise, x_vals_norm_catwise, x_vals_emu_norm_catwise, y_vals_catwise, x_vals_errors_emu_catwise
     )
-    pred_allwise, model_allwise = kNN_pred(
-        best_k_allwise, x_vals_norm_allwise, x_vals_emu_norm_allwise, y_vals_allwise
-    )
-
-    catwise_distances, catwise_indices = model_catwise.kneighbors(
-        x_vals_emu_norm_catwise
-    )
-    allwise_distances, allwise_indices = model_allwise.kneighbors(
-        x_vals_emu_norm_allwise
+    pred_allwise, uncert_allwise, model_allwise = kNN_pred_errors(
+        best_k_allwise, x_vals_norm_allwise, x_vals_emu_norm_allwise, y_vals_allwise, x_vals_errors_emu_allwise
     )
 
-    variances_catwise = []
-    for row in tqdm(catwise_indices):
-        train_predictions = model_catwise.predict(x_vals_norm_catwise[row, :])
-        variances_catwise.append(np.var(train_predictions))
+    # catwise_distances, catwise_indices = model_catwise.kneighbors(
+    #     x_vals_emu_norm_catwise
+    # )
+    # allwise_distances, allwise_indices = model_allwise.kneighbors(
+    #     x_vals_emu_norm_allwise
+    # )
 
-    variances_allwise = []
-    for row in tqdm(allwise_indices):
-        train_predictions = model_allwise.predict(x_vals_norm_allwise[row, :])
-        variances_allwise.append(np.var(train_predictions))
+    # variances_catwise = []
+    # for row in tqdm(catwise_indices):
+    #     train_predictions = model_catwise.predict(x_vals_norm_catwise[row, :])
+    #     variances_catwise.append(np.var(train_predictions))
+
+    # variances_allwise = []
+    # for row in tqdm(allwise_indices):
+    #     train_predictions = model_allwise.predict(x_vals_norm_allwise[row, :])
+    #     variances_allwise.append(np.var(train_predictions))
 
     prediction_filename_catwise = "predictions_catwise.csv"
     df = pd.DataFrame(
@@ -210,7 +281,7 @@ def main():
             "EMU_component_id": full_table_catwise["component_id"],
             "EMU_component_name": full_table_catwise["component_name"],
             "Pred_z": pred_catwise,
-            "Uncertainty": variances_catwise,
+            "Uncertainty": uncert_catwise,
         }
     )
     df.to_csv(prediction_filename_catwise, index=False)
@@ -225,7 +296,7 @@ def main():
             "EMU_component_id": full_table_allwise["component_id"],
             "EMU_component_name": full_table_allwise["component_name"],
             "Pred_z": pred_allwise,
-            "Uncertainty": variances_allwise,
+            "Uncertainty": uncert_allwise,
         }
     )
     df.to_csv(prediction_filename, index=False)

@@ -240,6 +240,52 @@ def kNN_pred(k_val, xValsTrain, xValsTest, yValsTrain):
         
     return predictions.ravel(), neigh
 
+def kNN_pred_errors(k_val, xValsTrain, xValsTest, yValsTrain, xValsTestErrors, n_iterations=100, random_seed=42):
+    """Run kNN regression with Monte Carlo error propagation on test features
+
+    Args:
+        k_val (int): Value to use as k for kNN
+        xValsTrain (np.array): 2-d np.array holding the photometry used for training
+        xValsTest (np.array): 2-d np.array holding the photometry used for testing
+        yValsTrain (np.array): 1-d np.array holding the measured redshift for training
+        xValsTestErrors (np.array): 2-d np.array holding the errors on test photometry
+        n_iterations (int): Number of Monte Carlo iterations (default: 100)
+        random_seed (int, optional): Random seed for reproducibility
+
+    Returns:
+        np.array: 1-d np.array holding the mean predictions
+        np.array: 1-d np.array holding the standard deviation (uncertainty) of predictions
+        KNeighborsRegressor: The trained model
+    """
+    if random_seed is not None:
+        rng = np.random.default_rng(random_seed)
+    else:
+        rng = np.random.default_rng()
+    
+    # Train model once on unperturbed training data
+    neigh = KNeighborsRegressor(n_neighbors=k_val, metric="mahalanobis", 
+                                metric_params={"V": np.cov(xValsTrain.astype(np.float64), rowvar=False)})
+    neigh.fit(xValsTrain.astype(np.float64), np.squeeze(yValsTrain).astype(np.float64))
+    
+    # Store predictions from each iteration
+    all_predictions = np.zeros((n_iterations, len(xValsTest)))
+    
+    for i in tqdm(range(n_iterations)):
+        # Perturb test features by sampling from normal distribution
+        # centered at measured value with std dev = measurement error
+        x_test_perturbed = xValsTest + rng.normal(0, xValsTestErrors, size=xValsTest.shape)
+        
+        # Make predictions on perturbed test data
+        all_predictions[i] = neigh.predict(x_test_perturbed.astype(np.float64))
+    
+    # Calculate mean and standard deviation across all iterations
+    median_predictions = np.median(all_predictions, axis=0)
+
+    p16, p84 = np.percentile(all_predictions, [16, 84])
+    uncertainties = 0.5 * (p84 - p16)
+    
+    return median_predictions.ravel(), uncertainties.ravel(), neigh
+
 def kNN_cross_val(k_val, k_fold_val, random_seed, x_vals_train, y_vals_train, tqdm_disable = False):
     """Run kNN regression
 
